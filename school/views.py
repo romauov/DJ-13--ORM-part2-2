@@ -6,11 +6,8 @@ from .models import Student
 
 def students_list(request):
     template = 'school/students_list.html'
-    students = Student.objects.all()
-    for student in students:
-        print(student)
-        for teacher in student.teachers.all():
-            print(teacher.name, teacher.subject)
+    students = Student.objects.all().order_by('group').prefetch_related('teachers')
+
     context = {
         'object_list': students
     }
